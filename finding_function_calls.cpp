@@ -1,21 +1,13 @@
-#include<iostream>
-#include<regex>
-#include<string>
-using namespace std;
-
-int main()
+#include "finding_function_calls.h"
+bool matchFunctionCall(const std::string& input)
 {
-	regex regex_call("[A-Za-z][0-9A-Za-z_]*\\(([A-Za-z][0-9A-Za-z_]*:[A-Za-z][0-9A-Za-z_]*)([,][A-Za-z][0-9A-Za-z_]*:[A-Za-z][0-9A-Za-z_]*)*\\)");
-	smatch match;
-	string input;
-	cin>>input;
-	if(regex_match(input,regex_call))
+	const char *for_const ="for";
+	if(input.rfind(for_const,0)!=0)
 	{
-		cout<<"MATCHED\n";
+		std::regex regex_call("[[:alpha:]][[:alpha:][:digit:]_]*\\(([[:alpha:]][[:alpha:][:digit:]_]*:[^:]*)(,[[:alpha:]][[:alpha:][:digit:]_]*:[^:]*)*\\)");
+		if(std::regex_match(input,regex_call))
+			return true;
+		else
+			return false;
 	}
-	else
-	{
-		cout<<"NOT MATCHED\n";
-	}
-	return 0;
 }
